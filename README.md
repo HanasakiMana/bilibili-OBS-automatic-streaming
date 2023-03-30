@@ -10,7 +10,7 @@
 2. 从[Bilibili直播个人中心](https://link.bilibili.com/p/center/index#/my-room/start-live)获取第三方直播软件所需的RTMP密钥；
 3. 在OBS中的推流设置中完成与直播相关的设置，并填写上述获得的RTMP密钥；
 4. 如果您的OBS版本低于v27及以下，请手动安装[obs-websocket](https://obsproject.com/forum/resources/obs-websocket-remote-control-obs-studio-using-websockets.466/)（从v28起，obs-websocket已经内置在OBS中）；
-5. 在OBS的“工具”-“obs-websocket设置”一栏中开启obs-websocket服务器（对于v27及以下，该选项位于“工具”-“WebSocket Server Settings(4.x Compat)”中）；
+5. 在OBS的“工具”-“obs-websocket设置”一栏中开启obs-websocket服务器（对于v27及以下，该选项位于“工具”-“WebSocket Server Settings(4.x Compat)”中），并将接口和密码填入“obs-websocket-settings.json”中；
 
 ### 运行脚本
 **首次运行：**
