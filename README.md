@@ -1,6 +1,6 @@
 # bilibili-OBS-automatic-streaming
-## 概述
 一个能够自动开启Bilibili直播并唤起OBS推流的脚本。
+## 概述
 
 **脚本原理**
 
@@ -30,3 +30,5 @@
 
 ## TODO
 - [ ] 利用[bilibili-api](https://pypi.org/project/bilibili-api/)完成对Bilibili开播状态的监视，并自动在断连时进行重连
+- [ ] 加入直播分区的自定义功能
+- [ ] 为本地保存的cookies加入加密功能（遥遥无期）
