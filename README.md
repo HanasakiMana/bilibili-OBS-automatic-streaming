@@ -33,4 +33,7 @@
 ## TODO
 - [ ] 利用[bilibili-api](https://pypi.org/project/bilibili-api/)完成对Bilibili开播状态的监视，并自动在断连时进行重连
 - [ ] 加入直播分区的自定义功能
+- [ ] 使用pyinstaller将脚本打包成可执行文件
 - [ ] 为本地保存的cookies加入加密功能（遥遥无期）
+
+Developed with ❤️ by Mallow-Mana
