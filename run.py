@@ -7,6 +7,7 @@ import json
 import time
 import sys, os
 import obsws_python 
+import yaml
 
 class startBilibili:
     def __init__(self):
@@ -16,10 +17,24 @@ class startBilibili:
             with open('cookies.json', 'r') as f:
                 print("发现存在的cookies文件，进入自动开播进程：")
                 self.cookies = json.loads(f.read())
-            self.start_streaming()
         except:
             print("未能找到包含cookies的json文件，请您按照接下来的指引生成。")
             self.get_cookies()
+        # 加载设置
+        try:
+            with open('settings.yaml', 'r') as f:
+                print("加载Bilibili直播设置：")
+                settings = yaml.load(f.read(), Loader=yaml.FullLoader)['liveroom_settings']
+                print(settings)
+                self.category = settings['category']
+                self.sub_category = settings['sub_category']
+                self.liveroom_id = settings['liveroom_id']
+        except:
+            print("加载配置文件失败，请检查文件格式和内容是否正确。")
+            sys.exit()
+        self.start_streaming()
+
+
 
     def get_cookies(self):
         input("1、接下来，脚本会为您创建一个新的浏览器页面，请在页面中登录直播所用的账号（按下回车键继续）：")
@@ -57,15 +72,22 @@ class startBilibili:
         print("完成。")
         time.sleep(1)
         # 点击单机游戏
-        print("选择单机游戏……")
-        local_games_btn = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '''//*[@id="live-center-app"]/div/main/div/div[1]/div[2]/div/div[1]/section/div[1]/div[1]/div[2]/div[2]/div/ul/li[3]''')))
+        print(f"选择{self.category}……")
+        category_list = ['网游', '手游', '单机游戏', '娱乐', '电台', '虚拟主播', '生活', '知识', '赛事']
+        for i in range(len(category_list)):
+            if category_list[i] == self.category:
+                local_games_btn = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, f'''//*[@id="live-center-app"]/div/main/div/div[1]/div[2]/div/div[1]/section/div[1]/div[1]/div[2]/div[2]/div/ul/li[{i+1}]''')))
+                break
+            if i == len(category_list) - 1:
+                print("无法找到对应的直播间分类，请检查配置文件是否填写正确！")
+                sys.exit()
         action.move_to_element(local_games_btn).click().perform()
         print("完成。")
         time.sleep(1)
         # 搜索框内搜索其他单机
-        print("选择“其他单机”……")
+        print(f"选择“{self.sub_category}”……")
         search_input = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '''//*[@id="live-center-app"]/div/main/div/div[1]/div[2]/div/div[1]/section/div[1]/div[1]/div[2]/div[2]/div/input''')))
-        action.send_keys_to_element(search_input, '其他单机').perform()
+        action.send_keys_to_element(search_input, self.sub_category).perform()
         time.sleep(1)
         other_local_games_btn = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '''//*[@id="live-center-app"]/div/main/div/div[1]/div[2]/div/div[1]/section/div[1]/div[1]/div[2]/div[2]/div/div/div[1]/div/div/a''')))
         action.move_to_element(other_local_games_btn).click().perform()
@@ -93,9 +115,9 @@ class startOBS:
         print("----------正在开启OBS串流----------")
         time.sleep(1)
         try:
-            with open('obs-websocket-settings.json', 'r') as f:
+            with open('settings.yaml', 'r') as f:
                 print("开始启动OBS串流：")
-                settings = json.loads(f.read())
+                settings = yaml.load(f.read(), Loader=yaml.FullLoader)['obs_websocket']
             self.host = settings['host']
             self.port = settings['port']
             self.password = settings['password']
@@ -165,7 +187,7 @@ class startOBS:
                     print("直播发生中断，5秒钟后尝试重新连接……")
                     time.sleep(5)
                     break
-                time.sleep(1)
+                time.sleep(3)
         start_stream()
 
 

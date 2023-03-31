@@ -1,0 +1,11 @@
+# settings for obs-websocket
+obs_websocket:
+  host: localhost
+  port: 4455
+  password: password
+
+# settings for bilibili liveroom
+liveroom_settings:
+  category: 单机游戏
+  sub_category: 其他单机
+  liveroom_id: 260825

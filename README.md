@@ -8,9 +8,24 @@
 
 1. 安装[Chrome浏览器](https://www.google.cn/chrome/)和对应版本的[WebDriver](https://chromedriver.chromium.org)；
 2. 从[Bilibili直播个人中心](https://link.bilibili.com/p/center/index#/my-room/start-live)获取第三方直播软件所需的RTMP密钥；
-3. 在OBS中的推流设置中完成与直播相关的设置，并填写上述获得的RTMP密钥；
+3. 下载并安装[OBS](https://obsproject.com)，在OBS中的推流设置中完成与直播相关的设置，并填写上述获得的RTMP密钥；
 4. 如果您的OBS版本低于v27及以下，请手动安装[obs-websocket](https://obsproject.com/forum/resources/obs-websocket-remote-control-obs-studio-using-websockets.466/)（从v28起，obs-websocket已经内置在OBS中）；
-5. 在OBS的“工具”-“obs-websocket设置”一栏中开启obs-websocket服务器（对于v27及以下，该选项位于“工具”-“WebSocket Server Settings(4.x Compat)”中），并将接口和密码填入“obs-websocket-settings.json”中；
+5. 在OBS的“工具”-“obs-websocket设置”一栏中开启obs-websocket服务器（对于v27及以下，该选项位于“工具”-“WebSocket Server Settings(4.x Compat)”中）；
+6. 在脚本目录中找到settings.yaml文件，填写对应的信息；该文件包含以下内容：
+
+'''
+# settings for obs-websocket
+obs_websocket:
+  host: obs-websocket的主机地址，默认为localhost
+  port: obs-websocket的连接端口，默认为4455
+  password: obs-websocket的密码
+
+# settings for bilibili liveroom
+liveroom_settings:
+  category: 直播间的主分类，类型为字符串
+  sub_category: 直播间的子分类，类型为字符串
+  liveroom_id: 直播间的id，暂时没有使用
+'''
 
 ### 运行脚本
 **首次运行：**
@@ -32,7 +47,7 @@
 
 ## TODO
 - [ ] 利用[bilibili-api](https://pypi.org/project/bilibili-api/)完成对Bilibili开播状态的监视，并自动在断连时进行重连
-- [ ] 加入直播分区的自定义功能
+- [x] 加入直播分区的自定义功能
 - [ ] 使用pyinstaller将脚本打包成可执行文件
 - [ ] 为本地保存的cookies加入加密功能（遥遥无期）
 
