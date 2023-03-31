@@ -11,9 +11,9 @@
 3. 下载并安装[OBS](https://obsproject.com)，在OBS中的推流设置中完成与直播相关的设置，并填写上述获得的RTMP密钥；
 4. 如果您的OBS版本低于v27及以下，请手动安装[obs-websocket](https://obsproject.com/forum/resources/obs-websocket-remote-control-obs-studio-using-websockets.466/)（从v28起，obs-websocket已经内置在OBS中）；
 5. 在OBS的“工具”-“obs-websocket设置”一栏中开启obs-websocket服务器（对于v27及以下，该选项位于“工具”-“WebSocket Server Settings(4.x Compat)”中）；
-6. 在脚本目录中找到settings.yaml文件，填写对应的信息；该文件包含以下内容：
+6. 在脚本目录中找到`settings.yaml`文件，填写对应的信息；该文件包含以下内容：
 
-'''
+```
 # settings for obs-websocket
 obs_websocket:
   host: obs-websocket的主机地址，默认为localhost
@@ -25,14 +25,14 @@ liveroom_settings:
   category: 直播间的主分类，类型为字符串
   sub_category: 直播间的子分类，类型为字符串
   liveroom_id: 直播间的id，暂时没有使用
-'''
+```
 
 ### 运行脚本
 **首次运行：**
-在首次运行脚本时，脚本会进入抓取cookies的流程。脚本会唤起一个受控的Chrome页面并自动进入Bilibili主页，请您在本页面中登录您直播所使用的账号。在登录完成后，请您在脚本页面按下回车键，脚本会自动抓取并保存您的cookies，并以一个名为“cookies.json”的文件保存在脚本的同一目录。之后脚本会自动退出，完成首次运行的操作。
+在首次运行脚本时，脚本会进入抓取cookies的流程。脚本会唤起一个受控的Chrome页面并自动进入Bilibili主页，请您在本页面中登录您直播所使用的账号。在登录完成后，请您在脚本页面按下回车键，脚本会自动抓取并保存您的cookies，并以一个名为`cookies.json`的文件保存在脚本的同一目录。之后脚本会自动退出，完成首次运行的操作。
 
 **再次运行：**
-在cookies.json文件存在的情况下，脚本会自动进入开播流程。脚本会自动唤起Chrome，利用cookies完成登录操作，完成开播的点按操作，并控制OBS开始推流。之后，脚本会自动进入OBS的监视页面，显示包括推流状态、输出分辨率和帧率、时间码、丢帧、上传流量等统计信息。在监测到推流中断后，脚本会重新尝试开启推流的操作，直到推流成功。
+在`cookies.json`文件存在的情况下，脚本会自动进入开播流程。脚本会自动唤起Chrome，利用cookies完成登录操作，完成开播的点按操作，并控制OBS开始推流。之后，脚本会自动进入OBS的监视页面，显示包括推流状态、输出分辨率和帧率、时间码、丢帧、上传流量等统计信息。在监测到推流中断后，脚本会重新尝试开启推流的操作，直到推流成功。
 
 ### 自动化
 将本脚本和OBS加入开机启动项，即可在直播设备上电开机时自动开启。除此之外，您可能还需要在直播设备的BIOS中将上电设置调整为上电即开机。
