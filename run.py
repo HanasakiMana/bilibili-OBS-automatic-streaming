@@ -1,4 +1,4 @@
-from selenium import webdriver
+﻿from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -22,7 +22,7 @@ class startBilibili:
             self.get_cookies()
         # 加载设置
         try:
-            with open('settings.yaml', 'r') as f:
+            with open('settings.yaml', 'r', encoding="utf-8") as f:
                 print("加载Bilibili直播设置：")
                 settings = yaml.load(f.read(), Loader=yaml.FullLoader)['liveroom_settings']
                 print(settings)
@@ -42,7 +42,6 @@ class startBilibili:
         driver.get("https://www.bilibili.com")
         input("2、接下来，脚本会抓取您的cookie并以json文件的形式保存在本地，请您妥善保管，避免泄露导致被盗号等损失（按下回车键继续）：")
         cookies = driver.get_cookies()
-        print('cookies:', cookies)
         with open('cookies.json', 'w') as f:
             f.write(json.dumps(cookies))
         driver.close()
@@ -101,7 +100,7 @@ class startBilibili:
         time.sleep(1)
         # 点击开播
         print("点击开播……")
-        live_straming_start_btn = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '''//*[@id="live-center-app"]/div/main/div/div[1]/div[2]/div/div[1]/section/div[1]/div[8]/button''')))
+        live_straming_start_btn = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '''//*[@id="live-center-app"]/div/main/div/div[1]/div[2]/div/div[1]/section/div[1]/div[9]/button''')))
         action.move_to_element(live_straming_start_btn).click().perform()
         print("完成。")
         print("正在关闭浏览器……")
@@ -172,7 +171,7 @@ class startOBS:
                 os.system(clear_cmd)
                 stream_status = obs.get_stream_status()
                 print("-----Bilibili直播-OBS自动开播脚本-----")
-                print("---------由Mallow&Mana用爱开发--------\n")
+                print("---------Made by Mallow&Mana with love--------\n")
                 print(f"输出状态：{stream_status.output_active}")
                 print(f"重连状态：{stream_status.output_reconnecting}")
                 print(f"当前输出分辨率：{video_settings.output_width}x{video_settings.output_height}")
@@ -193,6 +192,6 @@ class startOBS:
 
 if __name__ == '__main__':
     print("-----Bilibili直播-OBS自动开播脚本-----")
-    print("---------由Mallow&Mana用爱开发--------\n")
+    print("---------Made by Mallow&Mana with love--------\n")
     startBilibili()
     startOBS()
